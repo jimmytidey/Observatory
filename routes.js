@@ -1,5 +1,13 @@
 Router.map(function () {
     
+    this.route('home',{
+        path: '/'
+    });
+
+    this.route('dashboard',{
+        path: '/dashboard'
+    });
+    
     this.route('parser', {
        path: '/parser/:parser',
        where: 'server',
@@ -12,23 +20,6 @@ Router.map(function () {
          this.response.end('\n');
        }
     });
-    
-    this.route('home',{
-        path: '/'
-    });
-
-    this.route('dashboard',{
-        path: '/dashboard'
-    });
-    
-    this.route('notFound', {
-        path: '*',
-        where: 'server',
-        action: function(){
-            this.response.statusCode = 404;
-            this.response.end(Handlebars.templates['404']);    
-        }
-    });
-    
+        
 
 });
