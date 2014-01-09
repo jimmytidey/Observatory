@@ -6,6 +6,6 @@ Template.dataFeedList.helpers({
 
 Template.dataFeedItem.events({
   'click .data_feed_go': function () {
-      Meteor.call(data_feed_go, this.url, this.parameters);
+      Meteor.call('data_feed_go', this.url, this.parameter);
   }
 });
