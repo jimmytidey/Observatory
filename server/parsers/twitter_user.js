@@ -9,5 +9,5 @@ var twit = new twitter({
 });
 
 twit.get('/statuses/show/27593302936.json', {include_entities:true}, function(data) {
-    console.log(util.inspect(data));
+    //console.log(util.inspect(data));
 });
