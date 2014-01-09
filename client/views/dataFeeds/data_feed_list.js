@@ -4,8 +4,9 @@ Template.dataFeedList.helpers({
     }
 });
 
+//TODO: change the name URL to type... 
 Template.dataFeedItem.events({
-  'click .data_feed_go': function () {
-      Meteor.call('data_feed_go', this.url, this.parameter, this._id);
-  }
+    'click .data_feed_go': function () {
+        Meteor.call(this.url, this.url, this.parameter, this._id);
+    }
 });

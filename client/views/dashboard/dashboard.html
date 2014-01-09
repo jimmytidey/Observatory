@@ -1,7 +1,13 @@
 <template name="dashboard">
     <div class='container'>
         <h1>Dashboard</h1>
-        {{> dataFeedList}}
-        {{> addDataFeed}}
+        <div class='row'>
+            <div class='col-md-6'>
+                {{> dataFeedList}}
+                {{> addDataFeed}}
+            </div>
+            <div class='col-md-6'>
+                {{> recentItemsList}}
+            </div>
     </div>  
 </template>
