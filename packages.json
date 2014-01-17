@@ -1,4 +1,5 @@
 {
     "twitter": "0.2.5",
-    "fbgraph" : "0.2.7"
+    "fbgraph" : "0.2.7",
+    "feedparser": "0.16.5"
 }
