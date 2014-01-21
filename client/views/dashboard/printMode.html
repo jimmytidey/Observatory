@@ -3,22 +3,29 @@
         
         <div class="row">
             <div class="col-md-4">
+                <label for='feed_name'>Filter</label>
                 <select id='feed_name' name='feed_name' >
                     <option value='twitter_user' >twitter_user</option>
                     <option value='facebook_mentions' >facebook_mentions</option>
                     <option value='blog' >blog</option>
-                    <option value='' >none</option>
+                    <option value='none' >none</option>
                 </select>
             </div>
             
-            <div class="col-md-4"> 
+            <div class="col-md-1"> 
                 <label for='skip'>Skip</label>
                 <input class='skip_input' type='text' name='skip' id='skip'  />
             </div>
             
-            <div class="col-md-4">
+            <div class="col-md-1">
                 <label for='limit'>Limit</label>
                 <input class='limit_input' type='text' name='limit' id='limit'  />
+            </div>
+            
+            <div class="col-md-2">
+                <div class="controls">
+                    <input type="submit" value="Save" class="btn btn-primary"/>
+                </div>
             </div>
         </div>    
     </form>    

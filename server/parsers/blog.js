@@ -21,14 +21,15 @@ function getBlog(url, parameter, id){
                     var date         = new Date(item.pubdate);
                     var timestamp    = date.getTime();
                     var current_time = new Date().getTime();
-
+                    
+                    //TODO: time_generated would be better as time_published
                     var new_item = {
                         native_id: null,
                         title: item.title,
                         author_name: item.author,
                         author_id: null,
                         content: item['atom:summary']['#'],
-                        time_generated: timestamp,
+                        time_generated: date,
                         time_recorded: current_time,
                         url: item['atom:link']['@']['href'],
                         feed_name: url,

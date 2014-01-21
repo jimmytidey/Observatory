@@ -35,7 +35,7 @@ Meteor.methods({
                         url: "https://twitter.com/" + parameter + "/status/"+ data[i].id_str,
                         feed_name: url,
                         feed_parameter:parameter,
-                        feed_parameter_desc: 'Twitter @' + parameter,
+                        feed_parameter_desc: '@' + parameter + ' via Twitter',
                         source: "Twitter"
                     }
                     
