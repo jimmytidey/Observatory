@@ -1,3 +1,6 @@
 <template name="recentItemsItem">
-    <p class='stream_entry'><a href='{{url}}' >{{title}} ({{source}} - {{author_name}})</p>
+    <div class='stream_entry'>
+        <p href='{{url}}' >{{title}} ({{source}} - {{author_name}})</p>
+        <p class='stream_entry_date'>{{ time_generated }}</p>
+    </div>
 </template>
