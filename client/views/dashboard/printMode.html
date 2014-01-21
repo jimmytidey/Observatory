@@ -1,0 +1,25 @@
+<template name="printMode">
+    <form class="print_mode">
+        
+        <div class="row">
+            <div class="col-md-4">
+                <select id='feed_name' name='feed_name' >
+                    <option value='twitter_user' >twitter_user</option>
+                    <option value='facebook_mentions' >facebook_mentions</option>
+                    <option value='blog' >blog</option>
+                    <option value='' >none</option>
+                </select>
+            </div>
+            
+            <div class="col-md-4"> 
+                <label for='skip'>Skip</label>
+                <input class='skip_input' type='text' name='skip' id='skip'  />
+            </div>
+            
+            <div class="col-md-4">
+                <label for='limit'>Limit</label>
+                <input class='limit_input' type='text' name='limit' id='limit'  />
+            </div>
+        </div>    
+    </form>    
+</template>

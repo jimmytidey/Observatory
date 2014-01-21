@@ -35,7 +35,8 @@ Meteor.methods({
                         url: "https://twitter.com/" + parameter + "/status/"+ data[i].id_str,
                         feed_name: url,
                         feed_parameter:parameter,
-                        source: "twitter"
+                        feed_parameter_desc: 'Twitter @' + parameter,
+                        source: "Twitter"
                     }
                     
                     var extant = Items.find({native_id: data[i].id_str}).count();

@@ -28,11 +28,12 @@ function getBlog(url, parameter, id){
                         author_name: item.author,
                         author_id: null,
                         content: item['atom:summary']['#'],
-                        time_generated: current_time,
-                        time_recorded: timestamp,
+                        time_generated: timestamp,
+                        time_recorded: current_time,
                         url: item['atom:link']['@']['href'],
                         feed_name: url,
                         feed_parameter: parameter,
+                        feed_parameter_desc: "Blog post from: " + parameter,
                         source: 'blog'
                     }
 

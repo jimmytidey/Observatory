@@ -1,0 +1,1 @@
+PrintMode = new Meteor.Collection('printMode');

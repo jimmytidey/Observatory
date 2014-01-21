@@ -5,7 +5,6 @@ Template.addDataFeed.events({
         var post = {
           url: $(e.target).find('[name=url]').val(),
           parameter: $(e.target).find('[name=parameter]').val(),
-          
         }
 
         DataFeeds.insert(post);

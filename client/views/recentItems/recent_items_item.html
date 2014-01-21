@@ -1,6 +1,10 @@
 <template name="recentItemsItem">
     <div class='stream_entry'>
-        <p href='{{url}}' >{{title}} ({{source}} - {{author_name}})</p>
-        <p class='stream_entry_date'>{{ time_generated }}</p>
+        <p class='stream_entry_title' ><a href='{{url}}' >{{title}}</a></p>
+        <p>{{ feed_parameter_desc }}</p>
+        {{#if content}}
+            <p> {{content}}</p>
+        {{/if}}
+        <p class='stream_entry_date'>{{prettifyDate time_generated}}  <a class='remove_item'>[Delete]</p> 
     </div>
 </template>

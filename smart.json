@@ -7,6 +7,7 @@
       "commit": "ad0381d3fa80aa2247b9d6200d4489f1fd3430c8"
     },
     "handlebars-server": {},
-    "npm": {}
+    "npm": {},
+    "moment": {}
   }
 }
