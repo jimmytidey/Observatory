@@ -1,4 +1,7 @@
 <template name="printMode">
+    
+    
+    
     <form class="print_mode">
         
         <div class="row">
@@ -29,4 +32,13 @@
             </div>
         </div>    
     </form>    
+    
+    <div class="row">
+        <div class="col-md-6">
+                
+                <p>Feed name: {{ printMode.feed_name }}</p>
+                <p>Skip: {{ printMode.skip }}</p>
+                <p>Limit: {{ printMode.limit }}</p>
+        </div>
+    </div>
 </template>

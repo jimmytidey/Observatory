@@ -12,3 +12,9 @@ Template.printMode.events({
         PrintMode.insert(mode);
     }
 });
+
+Template.printMode.helpers({
+    printMode: function() {
+        return PrintMode.findOne({}, {sort: {time: -1}});
+    }
+});

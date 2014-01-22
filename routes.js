@@ -21,30 +21,36 @@ Router.map(function () {
          data.results = [];
          
          var mode = PrintMode.findOne({}, {sort: {time: -1}});
-         
+         console.log(mode);
          data.mode = mode;
          
          if(typeof mode === "undefined"){
-             var items = Items.find({},{limit:10, skip:0, sort: {time_generated: 1} });
+             var items = Items.find({},{limit:10, skip:0, sort: {time_generated: -1} });
          }
-         else if (mode.feed_name == 'none') { 
+         else if (mode.feed_name == 'none') {
+             console.log('running none version of stream');
              var items = Items.find({},{limit:mode.limit, skip:mode.skip, sort: {time_generated: -1} });
          } else { 
              var items = Items.find({feed_name: mode.feed_name},{limit:mode.limit, skip:mode.skip, sort: {time_generated: -1} });
          }
-        
          
-         items.forEach(function (item) {
-            item.time_generated = moment(new Date(item.time_generated)).fromNow();
-            //make printable
-            item.title = item.title.replace(/[^\x00-\x7F]/g, "");
-            item.feed_parameter_desc = item.feed_parameter_desc.replace(/[^\x00-\x7F]/g, "");
-            item.time_generated = item.time_generated.replace(/[^\x00-\x7F]/g, "");
+         if(items) {         
+             items.forEach(function (item) {
+                if(item.time_generated && item.feed_parameter_desc && item.title) {
+                    item.time_generated = moment(new Date(item.time_generated)).fromNow();
+                    //make printable
+                    item.title = item.title.replace(/[^\x00-\x7F]/g, "");
+                    item.feed_parameter_desc = item.feed_parameter_desc.replace(/[^\x00-\x7F]/g, "");
+                    item.time_generated = item.time_generated.replace(/[^\x00-\x7F]/g, "");
+                }
             
-            data.results.push(item);
-         });
+                data.results.push(item);
+             });
+        }else { 
+            data.error = "there were no results";
+        } 
          
-         console.log(data);
+        
          
          this.response.writeHead(200, {'content-type': 'text/json' });
          this.response.write(JSON.stringify(data));
