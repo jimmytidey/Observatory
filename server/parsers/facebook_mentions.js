@@ -19,7 +19,8 @@ Meteor.methods({
             
             fb.get(group_id + '?fields=tagged', function(err, res) {
                 var data = res.tagged.data;
-
+                
+                Fiber(function(){
                 for(var i=0; i< data.length; i++){
                     var date         = new Date(data[i].created_time);
                     var timestamp    = date.getTime();
@@ -40,20 +41,21 @@ Meteor.methods({
                         source:'Facebook'
                     }
 
-                    Fiber( function(){
+                    
+                        console.log('item: ' + data[i].id);
                         var extant = Items.find({native_id: data[i].id}).count();
-
+                        
+                        console.log('---> count' +  extant);
+                        
                         if (extant === 0) {
-                            console.log('inserting', item);
+                            console.log('inserting');
                             Items.insert(item);
                         }
                         else { 
-                            console.log('duplicate', item);    
+                            console.log('duplicate');    
                         }
-                    }).run();
-
-
-                }    
+                }
+                }).run();
             });        
         
         
