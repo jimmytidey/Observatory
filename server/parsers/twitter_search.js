@@ -2,9 +2,9 @@ var util    = Meteor.require('util');
 var twitter = Meteor.require('twitter');
 
 Meteor.methods({
-    twitter_user: function (url, parameter, id) {
+    twitter_search: function (url, parameter, id) {
             
-            console.log('Parsing Twitter Users');
+            console.log('Parsing Twitter Search');
             
             var twit = new twitter({
                 consumer_key: global.observatory_keys['twitter_consumer_key'],
@@ -15,28 +15,27 @@ Meteor.methods({
             
             twit.listSync = Meteor._wrapAsync(twit.get.bind(twit));
             
-            twit.listSync('/statuses/user_timeline.json', {screen_name:parameter}, function(data) {
-                
-                for(var i=0; i< data.length; i++){ 
-                    
-                   
-                    var date         = new Date(data[i].created_at);
+            twit.listSync('/search/tweets.json', {q:parameter}, function(data) {
+                console.log(data);
+                for(var i=0; i< data.statuses.length; i++){ 
+                                       
+                    var date         = new Date(data.statuses[i].created_at);
                     var timestamp    = date.getTime();
                     var current_time = new Date().getTime();
 
                     var item = { 
-                        native_id: data[i].id_str, 
-                        title: data[i].text,
+                        native_id: data.statuses[i].id_str, 
+                        title: data.statuses[i].text,
                         author_name: parameter,
-                        author_id: data[i].user.id,
-                        author_image: data[i].user.profile_image_url,
+                        author_id: data.statuses[i].user.id,
+                        author_image: data.statuses[i].user.profile_image_url,
                         content:'',
                         time_generated: timestamp,
                         time_recorded:current_time,
-                        url: "https://twitter.com/" + parameter + "/status/"+ data[i].id_str,
+                        url: "https://twitter.com/" + parameter + "/status/"+ data.statuses[i].id_str,
                         feed_name: url,
                         feed_parameter:parameter, 
-                        feed_parameter_desc: '@' + parameter + ' via Twitter',
+                        feed_parameter_desc: '#' + parameter + ' via Twitter',
                         source: "Twitter"
                     }
                    
@@ -45,18 +44,18 @@ Meteor.methods({
                     item.context.urls       = [];
                     item.context.mentions   = [];
                    
-                    for(var j =0;  j < data[i]['entities'].urls.length; j++) { 
-                        item.context.urls.push(data[i]['entities'].urls[j].expanded_url);
+                    for(var j =0;  j < data.statuses[i]['entities'].urls.length; j++) { 
+                        item.context.urls.push(data.statuses[i]['entities'].urls[j].expanded_url);
                     }
                     
-                    for(var j =0;  j < data[i]['entities']['user_mentions'].length; j++) { 
-                        item.context.mentions.push(data[i]['entities']['user_mentions'][j].screen_name);
+                    for(var j =0;  j < data.statuses[i]['entities']['user_mentions'].length; j++) { 
+                        item.context.mentions.push(data.statuses[i]['entities']['user_mentions'][j].screen_name);
                     }
                     
                     console.log("Context", item.context);
                     
                     
-                    var extant = Items.find({native_id: data[i].id_str}).count();
+                    var extant = Items.find({native_id: data.statuses[i].id_str}).count();
                     
                     if (extant === 0) {
                         //console.log('inserting', item);

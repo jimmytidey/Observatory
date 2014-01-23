@@ -24,19 +24,19 @@ function getBlog(url, parameter, id){
                         var current_time = new Date().getTime();
                         console.log(item);
                         //TODO: time_generated would be better as time_published
-                    
+                        //TODO: watch out for this harad coded blog link
                         var new_item = {
                             native_id: null,
                             title: item.title,
                             author_name: item.author,
                             author_id: null,
                             content: item['atom:summary']['#'],
-                            time_generated: date,
+                            time_generated: timestamp,
                             time_recorded: current_time,
                             url: item['atom:link']['@']['href'],
                             feed_name: url,
                             feed_parameter: parameter,
-                            feed_parameter_desc: "Blog post from: " + parameter,
+                            feed_parameter_desc: "Blog post from: fact.co.uk/news-views",
                             source: 'blog'
                         }
 

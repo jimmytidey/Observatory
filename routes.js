@@ -21,7 +21,7 @@ Router.map(function () {
          data.results = [];
          
          var mode = PrintMode.findOne({}, {sort: {time: -1}});
-         console.log(mode);
+
          data.mode = mode;
          
          if(typeof mode === "undefined"){
