@@ -16,7 +16,7 @@ Meteor.methods({
             twit.listSync = Meteor._wrapAsync(twit.get.bind(twit));
             
             twit.listSync('/search/tweets.json', {q:parameter}, function(data) {
-                console.log(data);
+                
                 for(var i=0; i< data.statuses.length; i++){ 
                                        
                     var date         = new Date(data.statuses[i].created_at);
@@ -26,7 +26,7 @@ Meteor.methods({
                     var item = { 
                         native_id: data.statuses[i].id_str, 
                         title: data.statuses[i].text,
-                        author_name: parameter,
+                        author_name: data.statuses[i].user.screen_name,
                         author_id: data.statuses[i].user.id,
                         author_image: data.statuses[i].user.profile_image_url,
                         content:'',
@@ -35,7 +35,7 @@ Meteor.methods({
                         url: "https://twitter.com/" + parameter + "/status/"+ data.statuses[i].id_str,
                         feed_name: url,
                         feed_parameter:parameter, 
-                        feed_parameter_desc: '#' + parameter + ' via Twitter',
+                        feed_parameter_desc:  parameter + ' by ' + data.statuses[i].user.screen_name +  ' on Twitter',
                         source: "Twitter"
                     }
                    
@@ -51,15 +51,13 @@ Meteor.methods({
                     for(var j =0;  j < data.statuses[i]['entities']['user_mentions'].length; j++) { 
                         item.context.mentions.push(data.statuses[i]['entities']['user_mentions'][j].screen_name);
                     }
+          
                     
-                    console.log("Context", item.context);
-                    
-                    
-                    var extant = Items.find({native_id: data.statuses[i].id_str}).count();
+                    var extant = Updates.find({native_id: data.statuses[i].id_str}).count();
                     
                     if (extant === 0) {
                         //console.log('inserting', item);
-                        Items.insert(item);
+                        Updates.insert(item);
                     }
                     else { 
                         //console.log('duplicate', item);    

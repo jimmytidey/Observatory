@@ -1,0 +1,10 @@
+<template name="recentUpdate">
+    <div class='recentUpdate'>
+        <p class='stream_entry_title' ><a href='{{url}}' >{{title}}</a></p>
+        <p>{{ feed_parameter_desc }}</p>
+        {{#if content}}
+            <p> {{content}}</p>
+        {{/if}}
+        <p class='stream_entry_date'>{{prettifyDate time_generated}}  <a class='remove_item'>[Delete]</a></p> 
+    </div>
+</template>

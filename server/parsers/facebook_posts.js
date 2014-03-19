@@ -36,11 +36,11 @@ Meteor.methods({
                     source:'facebook'
                 }
                 
-                var extant = Items.find({native_id: data[i].id}).count();
+                var extant = Updates.find({native_id: data[i].id}).count();
                 
                 if (extant === 0) {
                     console.log('inserting', item);
-                    Items.insert(item);
+                    Updates.insert(item);
                 }
                 else { 
                     console.log('duplicate', item);    

@@ -13,5 +13,6 @@ accounts-ui
 accounts-entry
 accounts-password
 npm
-autopublish
 moment
+collection-api
+cron-tick

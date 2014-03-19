@@ -8,6 +8,8 @@
     },
     "handlebars-server": {},
     "npm": {},
-    "moment": {}
+    "moment": {},
+    "collection-api": {},
+    "cron-tick": {}
   }
 }

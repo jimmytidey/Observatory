@@ -1,0 +1,16 @@
+<template name="screenUpdate">
+    <div class='stream_entry row'>
+        <div class='col-md-3'>
+            <img src='{{author_image}}' />
+        </div>
+        
+        <div class='col-md-9'> 
+            <p class='screen_update_title' ><a href='{{url}}' target='_blank' >{{title}}</a></p>
+            <p>{{ feed_parameter_desc }}</p>
+            {{#if content}}
+                <p> {{content}}</p>
+            {{/if}}
+            <p class='screen_update_date'>{{prettifyDate time_generated}}</p> 
+        </div>        
+    </div>
+</template>

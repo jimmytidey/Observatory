@@ -1,5 +1,5 @@
-Template.homeItemsList.helpers({
-    homeItems: function() {
-        return Items.find({},{sort: {time_generated: -1} } );
+Template.homeUpdatesList.helpers({
+    homeUpdates: function() {
+        return Updates.find({},{sort: {time_generated: -1} } );
     }
 });

@@ -56,13 +56,13 @@ Meteor.methods({
                         }
                         
                         console.log(item.context);
-                        var extant = Items.find({native_id: data[i].id}).count();
+                        var extant = Updates.find({native_id: data[i].id}).count();
                         
                         console.log('---> count' +  extant);
                         
                         if (extant === 0) {
                             console.log('inserting');
-                            Items.insert(item);
+                            Updates.insert(item);
                         }
                         else { 
                             console.log('duplicate');    

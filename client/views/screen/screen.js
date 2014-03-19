@@ -1,5 +1,5 @@
-Template.screenItemsList.helpers({
-    screenItemsList: function() {
-        return Items.find({},{sort: {time_generated: -1} } );
+Template.screenUpdatesList.helpers({
+    screenUpdates: function() {
+        return Updates.find({},{sort: {time_generated: -1} } );
     }
 });

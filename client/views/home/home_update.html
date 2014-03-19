@@ -1,0 +1,10 @@
+<template name="homeUpdate">
+    <div class='homeUpdate'>
+        <p class='home_update_title' ><a href='{{url}}' >{{title}}</a></p>
+        <p>{{ feed_parameter_desc }}</p>
+        {{#if content}}
+            <p> {{content}}</p>
+        {{/if}}
+        <p class='home_update_date'>{{prettifyDate time_generated}}  <a class='remove_item'>[Delete]</a></p> 
+    </div>
+</template>

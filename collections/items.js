@@ -1,2 +1,2 @@
-Items = new Meteor.Collection('items');
+Updates = new Meteor.Collection('updates');
 

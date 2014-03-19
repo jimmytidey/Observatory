@@ -1,0 +1,1 @@
+SourceTypes = new Meteor.Collection('sourceTypes');

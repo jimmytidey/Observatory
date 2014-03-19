@@ -1,4 +1,5 @@
 Router.configure
+  notFoundTemplate: 'notFound'    
   layoutTemplate: 'layout'
   loadingTemplate: 'loading'
   yieldTemplates:

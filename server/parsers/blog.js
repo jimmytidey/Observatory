@@ -39,16 +39,14 @@ function getBlog(url, parameter, id){
                             feed_parameter_desc: "Blog post from: fact.co.uk/news-views",
                             source: 'blog'
                         }
-
                     
-                        var extant = Items.find({
+                        var extant = Updates.find({
                             url: item['atom:link']['@']['href']
                         }).count();
 
-
                         if (extant === 0) {
                             console.log('inserting', new_item);
-                            Items.insert(new_item);
+                            Updates.insert(new_item);
                         } else {
                             console.log('duplicate', new_item);
                         }
