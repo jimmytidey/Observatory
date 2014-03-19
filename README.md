@@ -1,3 +1,3 @@
-# meteor-boilerplate
+# Observatory 
 
-See our [documentation](http://github.differential.io/meteor-boilerplate/)
+See our [documentation](https://github.com/jimmytidey/observatory)

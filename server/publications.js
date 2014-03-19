@@ -1,7 +1,11 @@
 Meteor.publish('updates', function() {
-  return Updates.find();
+    return Updates.find();
 });
 
 Meteor.publish('sources', function() {
-  return Sources.find();
+    return Sources.find();
+});
+
+Meteor.publish('sourceTypes', function() {
+    return SourceTypes.find();
 });

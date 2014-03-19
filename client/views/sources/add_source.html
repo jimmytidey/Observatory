@@ -2,21 +2,41 @@
     <form class="main">
         
         <div class="add_data_feed row">
-            <div class="col-md-4">
-                <label class="control-label" for="url">Type</label>
+            <div class="col-md-3">
+                <label class="control-label" for="type">Type</label>
+                
                 <div class="controls">
-                    <input name="url" type="text" value="" placeholder="Your URL"/>
+                    <select name="type" id='type' >
+                        <option value='not_selected'>select</option>
+                        {{#each sourceTypes}}
+                          <option value='{{name}}'>{{name}}</option>
+                        {{/each}}
+                    </select>
                 </div>
             </div>
             
-            <div class="col-md-4">                
+            <div class="col-md-3">                
                 <label class="control-label" for="title">Parameter</label>
                 <div class="controls">
-                    <input name="parameter" type="text" value="" placeholder="Add a type"/>
+                    <input name="parameter" type="text" value="" placeholder="Add a paramter "/>
                 </div>    
             </div>
             
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <label class="control-label" for="frequency">Frequency</label>
+                
+                <div class="controls">
+                    <select name="frequency" id='frequency' >
+                          <option value='Every 5 mins'>Every 5 mins</option>
+                          <option value='Every 20 mins'>Every 20 mins</option>
+                          <option value='Every Hour'>Every Hour</option>
+                          <option value='Every Day'>Every Day</option>                                                                              
+                    </select>
+                </div>
+            </div>
+            
+
+            <div class="col-md-1">
                 <div class="controls">
                     <input type="submit" value="Submit" class="btn btn-primary"/>
                 </div>
@@ -24,6 +44,5 @@
         </div>
         
       </form>
-      <p>Types: facebook_mentions, twitter_user, blog</p>
-      
+
 </template>
