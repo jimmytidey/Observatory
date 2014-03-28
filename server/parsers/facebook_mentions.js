@@ -1,80 +1,53 @@
-var fb = Meteor.require('fbgraph');
-var Fiber = Meteor.require( "fibers" );
 
+
+//make this available on the client side
 Meteor.methods({
-    facebook_mentions: function (url, parameter, id) {
-        console.log('hi');
-        fb.setAccessToken(global.observatory_keys['facebook_access_token']);
-        var options = {
-            timeout: 3000,
-            pool: {maxSockets: Infinity},
-            headers: {connection: "keep-alive"}
-        }
-    
-        fb.setOptions(this.options);
-        
-        console.log(parameter)
-        fb.get(parameter, function(err, res) {
-            var group_id = res.id; 
-            
-            fb.get(group_id + '?fields=tagged', function(err, res) {
-                var data = res.tagged.data;
-                
-                Fiber(function(){
-                    for(var i=0; i< data.length; i++){
-                        var date         = new Date(data[i].created_time);
-                        var timestamp    = date.getTime();
-                        var current_time = new Date().getTime();
-
-                        var item = { 
-                            native_id: data[i].id, 
-                            title: data[i].message,
-                            author_name: data[i].from.name,
-                            author_id: data[i].from.id,
-                            content:'',
-                            time_generated: timestamp,
-                            time_recorded:current_time, 
-                            url: data[i].link,
-                            feed_name: url,
-                            feed_parameter:parameter,
-                            feed_parameter_desc: data[i].from.name + ' mentioned "' + parameter + '" on Facebook' ,
-                            source:'Facebook'
-                        }
-                        item.context = {};
-                        
-                        
-                        if (data[i].from.name) { 
-                            item.context.from = data[i].from.name;
-                        }
-                        
-                        if (data[i].to) { 
-                            item.context.to = data[i].to.data[0].name;
-                        }
-                        
-                        if (data[i].link) {
-                            item.context.link = data[i].link;
-                        }
-                        
-                        console.log(item.context);
-                        var extant = Updates.find({native_id: data[i].id}).count();
-                        
-                        console.log('---> count' +  extant);
-                        
-                        if (extant === 0) {
-                            console.log('inserting');
-                            Updates.insert(item);
-                        }
-                        else { 
-                            console.log('duplicate');    
-                        }
-                    }
-                }).run();
-            });        
-        
-        
-        });
-        
-
-            
+    facebook_mentions: function (source_id, parameter) {  
+        parser.facebook.getFacebookMentions(source_id, parameter);
     }
 });
+
+parser.facebook.getFacebookMentions = function(source_id, parameter) {
+    
+    //wrap up async functions 
+    var wrappedfacebookSearchPageIdByName = Meteor._wrapAsync(parser.facebook.searchPageIdByName); 
+    var wrappedfacebookGetMentionsById = Meteor._wrapAsync(parser.facebook.getMentionsById);   
+    
+    //now we can use them in a fiber...
+    var page_id_results = wrappedfacebookSearchPageIdByName(parameter);
+    var id = page_id_results.data[0].id;
+    var res = wrappedfacebookGetMentionsById(id);
+    var mentions = res.tagged.data;
+    
+    //stick them the DB
+    parser.facebook.insertMentions(mentions, parameter);
+    
+}  
+
+
+parser.facebook.insertMentions = function(mentions, parameter) { 
+    for(var i=0; i< mentions.length; i++){
+        
+        var item = parser.facebook.buildUpdate(mentions[i], 'facebook_mention', parameter);
+    
+        item.context = {};
+
+        if (mentions[i].from.name) { 
+            item.context.from = mentions[i].from.name;
+        }
+
+        if (mentions[i].to && mentions[i].to.mentions) { 
+            item.context.to = mentions[i].to.mentions[0].name;
+        }
+
+        if (mentions[i].link) {
+            item.context.link = mentions[i].link;
+        }
+  
+        parser.facebook.saveUpdate(item);
+    }    
+
+}
+
+
+

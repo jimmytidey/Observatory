@@ -1,0 +1,1 @@
+ScrapeLog = new Meteor.Collection('scrapeLog');

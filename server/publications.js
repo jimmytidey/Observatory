@@ -9,3 +9,7 @@ Meteor.publish('sources', function() {
 Meteor.publish('sourceTypes', function() {
     return SourceTypes.find();
 });
+
+Meteor.publish('scrapeLog', function() {
+    return ScrapeLog.find();
+});

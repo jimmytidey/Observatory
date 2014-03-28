@@ -8,6 +8,7 @@ Template.sourcesList.helpers({
 //TODO: change the name URL to type... 
 Template.sourcesList.events({
     'click .data_feed_go': function () {
-        Meteor.call(this.url, this.url, this.parameter, this._id);
+        //TODO: allowing the client side to call an arbritrary method is a massive securirty hole
+        Meteor.call(this.type, this._id, this.parameter);
     }
 });
