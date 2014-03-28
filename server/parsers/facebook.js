@@ -27,7 +27,7 @@ parser.facebook.searchPageIdByName = function(name, cb) {
     });
 }  
 
-parser.facebook.searchUserIdByName = function(name, cb) { 
+parser.facebook.searchUserIdByName = function(name, callback) { 
 
     fb = parser.facebook.apiSettings(fb);
 
@@ -37,7 +37,7 @@ parser.facebook.searchUserIdByName = function(name, cb) {
     };
     
     fb.search(searchOptions, function(err,res) { 
-        cb(err,res);
+        callback(err, res);
     });
 }     
 
@@ -50,52 +50,33 @@ parser.facebook.getMentionsById = function(id, cb) {
     });
 }  
 
-parser.facebook.getPostsById = function(id, cb) { 
-
+parser.facebook.getPostsById = function(id, callback) { 
+    
     fb = parser.facebook.apiSettings(fb);
     
     fb.get(id + '?fields=posts', function(err, res) {
-        cb(err,res);
-    });
+        callback(err, res);
+    }); 
 }  
 
 
 
 parser.facebook.saveUpdate = function(update) { 
     
-    var extant = Updates.find({native_id: update.id}).count();
-
+    var extant = Updates.find({native_id: update.native_id}).count();
+    
+    console.log(extant);
+    
     if (extant === 0) {
         console.log('inserting');
         Updates.insert(update);
+        return true; 
     }
     
     else { 
         console.log('duplicate');    
+        return false; 
     }
 }
 
-parser.facebook.buildUpdate = function(update, feed_type, parameter) { 
-    
-    var date         = new Date(update.created_time);
-    var timestamp    = date.getTime();
-    var current_time = new Date().getTime();
-    
-    var update = { 
-        native_id: update.id, 
-        title: update.message,
-        author_name: update.from.name,
-        author_id: update.from.id,
-        content:'',
-        time_generated: timestamp,
-        time_recorded:current_time, 
-        url: update.link,
-        feed_type: feed_type,
-        feed_parameter:parameter,
-        feed_parameter_desc: update.from.name + ' mentioned "' + parameter + '" on Facebook' ,
-        source:'Facebook'
-    }
-    
-    return update;
-    
-}
+
